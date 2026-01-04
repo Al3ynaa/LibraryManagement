@@ -1,0 +1,149 @@
+﻿<Window x:Class="LibraryManagement.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="clr-namespace:LibraryManagement.ViewModels"
+        Title="Library Management" Height="600" Width="900" WindowStartupLocation="CenterScreen">
+
+    <Window.DataContext>
+        <vm:MainViewModel/>
+    </Window.DataContext>
+
+    <Grid Margin="10">
+        <TabControl>
+            <!-- BOOKS -->
+            <TabItem Header="Books">
+                <Grid Margin="10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="320"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Grid.Column="0" Margin="0,0,10,0">
+                        <TextBlock Text="Add Book" FontSize="20" FontWeight="Bold" Margin="0,0,0,10"/>
+                        <TextBlock Text="Search"/>
+                        <TextBox Text="{Binding BookSearch, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,10"/>
+
+                        <TextBlock Text="Title"/>
+                        <TextBox Text="{Binding BookTitle, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,8"/>
+                        <TextBlock Text="Author"/>
+                        <TextBox Text="{Binding BookAuthor, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,8"/>
+                        <TextBlock Text="Year"/>
+                        <TextBox Text="{Binding BookYear, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,8"/>
+                        <TextBlock Text="ISBN"/>
+                        <TextBox Text="{Binding BookISBN, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,12"/>
+
+                        <Button Content="Add" Command="{Binding AddBookCommand}" Height="35" Margin="0,0,0,8"/>
+                        <Button Content="Update Selected" Command="{Binding UpdateBookCommand}" Height="35" Margin="0,0,0,8"/>
+                        <Button Content="Delete Selected" Command="{Binding DeleteBookCommand}" Height="35"/>
+                    </StackPanel>
+
+                    <DataGrid Grid.Column="1"
+                              ItemsSource="{Binding BooksView}"
+                              SelectedItem="{Binding SelectedBook}"
+                              AutoGenerateColumns="False" IsReadOnly="True">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Id" Binding="{Binding Id}" Width="60"/>
+                            <DataGridTextColumn Header="Title" Binding="{Binding Title}" Width="*"/>
+                            <DataGridTextColumn Header="Author" Binding="{Binding Author}" Width="200"/>
+                            <DataGridTextColumn Header="Year" Binding="{Binding Year}" Width="80"/>
+                            <DataGridTextColumn Header="ISBN" Binding="{Binding ISBN}" Width="160"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+            </TabItem>
+
+            <!-- MEMBERS -->
+            <TabItem Header="Members">
+                <Grid Margin="10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="320"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Grid.Column="0" Margin="0,0,10,0">
+                        <TextBlock Text="Add Member" FontSize="20" FontWeight="Bold" Margin="0,0,0,10"/>
+                        <TextBlock Text="Search"/>
+                        <TextBox Text="{Binding MemberSearch, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,10"/>
+
+                        <TextBlock Text="Name"/>
+                        <TextBox Text="{Binding MemberName, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,8"/>
+                        <TextBlock Text="Email"/>
+                        <TextBox Text="{Binding MemberEmail, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,8"/>
+                        <TextBlock Text="Phone"/>
+                        <TextBox Text="{Binding MemberPhone, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,12"/>
+
+                        <Button Content="Add" Command="{Binding AddMemberCommand}" Height="35" Margin="0,0,0,8"/>
+                        <Button Content="Update Selected" Command="{Binding UpdateMemberCommand}" Height="35" Margin="0,0,0,8"/>
+                        <Button Content="Delete Selected" Command="{Binding DeleteMemberCommand}" Height="35"/>
+                    </StackPanel>
+
+                    <DataGrid Grid.Column="1"
+                              ItemsSource="{Binding MembersView}"
+                              SelectedItem="{Binding SelectedMember}"
+                              AutoGenerateColumns="False" IsReadOnly="True">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Id" Binding="{Binding Id}" Width="60"/>
+                            <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="*"/>
+                            <DataGridTextColumn Header="Email" Binding="{Binding Email}" Width="200"/>
+                            <DataGridTextColumn Header="Phone" Binding="{Binding Phone}" Width="140"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+            </TabItem>
+
+            <!-- LOANS -->
+            <TabItem Header="Loans">
+                <Grid Margin="10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="320"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Grid.Column="0" Margin="0,0,10,0">
+                        <TextBlock Text="Add Loan" FontSize="20" FontWeight="Bold" Margin="0,0,0,10"/>
+                        <TextBlock Text="Search"/>
+                        <TextBox Text="{Binding LoanSearch, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,10"/>
+
+                        <TextBlock Text="Book"/>
+                        <ComboBox ItemsSource="{Binding Books}"
+                                  SelectedItem="{Binding LoanBook}"
+                                  DisplayMemberPath="Title"
+                                  Margin="0,0,0,8"/>
+
+                        <TextBlock Text="Member"/>
+                        <ComboBox ItemsSource="{Binding Members}"
+                                  SelectedItem="{Binding LoanMember}"
+                                  DisplayMemberPath="Name"
+                                  Margin="0,0,0,8"/>
+
+                        <TextBlock Text="Due Date"/>
+                        <DatePicker SelectedDate="{Binding DueDate}" Margin="0,0,0,12"/>
+
+                        <Button Content="Borrow" Command="{Binding AddLoanCommand}" Height="35" Margin="0,0,0,8"/>
+                        <Button Content="Update Selected" Command="{Binding UpdateLoanCommand}" Height="35" Margin="0,0,0,8"/>
+                        <Button Content="Delete Selected" Command="{Binding DeleteLoanCommand}" Height="35" Margin="0,0,0,8"/>
+                        <Button Content="Return Selected" Command="{Binding ReturnLoanCommand}" Height="35"/>
+
+                        <TextBlock Text="{Binding LoanMessage}" Foreground="Red" Margin="0,10,0,0"/>
+
+                    </StackPanel>
+
+                    <DataGrid Grid.Column="1"
+                              ItemsSource="{Binding LoanViewsView}"
+                              SelectedItem="{Binding SelectedLoanView}"
+                              AutoGenerateColumns="False" IsReadOnly="True">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Id" Binding="{Binding Id}" Width="60"/>
+                            <DataGridTextColumn Header="Book" Binding="{Binding Book}" Width="*"/>
+                            <DataGridTextColumn Header="Member" Binding="{Binding Member}" Width="200"/>
+                            <DataGridTextColumn Header="Due Date" Binding="{Binding DueDate, StringFormat=dd.MM.yyyy}" Width="120"/>
+                            <DataGridTextColumn Header="Status" Binding="{Binding Status}" Width="110"/>
+                            <DataGridTextColumn Header="Returned" Binding="{Binding ReturnedDate, StringFormat=dd.MM.yyyy}" Width="120"/>
+
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</Window>
