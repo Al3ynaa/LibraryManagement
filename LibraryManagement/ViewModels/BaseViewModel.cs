@@ -17,7 +17,7 @@ namespace LibraryManagement.ViewModels
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
 
-            // ✅ Property değişince command'ları tekrar kontrol et
+            //  Property değişince command'ları tekrar kontrol et
             CommandManager.InvalidateRequerySuggested();
         }
     }
